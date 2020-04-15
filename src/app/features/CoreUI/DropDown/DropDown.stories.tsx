@@ -8,8 +8,15 @@ export default {
   title: "DropDown"
 };
 
+const oncChange = (options: string) => {
+  console.log("option", options);
+};
 const data = ["Row One", "Row Two", "Row Three"];
 
-export const normal = () => <DropDown data={data} multiple={false}></DropDown>;
+export const normal = () => (
+  <DropDown options={data} onChange={oncChange}></DropDown>
+);
 
-export const multi = () => <DropDown data={data} multiple={true}></DropDown>;
+export const multi = () => (
+  <DropDown options={data} onChange={oncChange} multiple={true}></DropDown>
+);
