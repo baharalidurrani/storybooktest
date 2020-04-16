@@ -1,17 +1,18 @@
-import React, { FC, useCallback } from 'react';
-import { useForm } from 'react-hook-form';
-import { action } from '@storybook/addon-actions';
+import React, { FC, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { action } from "@storybook/addon-actions";
 
 // import '../../App/Root/Root.scss';
-import styles from './Form.module.scss';
-import FormInput from '../FormInput/FormInput';
-import TwoColumnGrid from '../TwoColumnGrid/TwoColumnGrid';
-import Label from '../Label/Label';
-import Button from '../Button/Button';
-import Toggle from '../Toggle/Toggle';
-import Checkbox from '../Checkbox/Checkbox';
+import styles from "./Form.module.scss";
+import FormInput from "../FormInput/FormInput";
+import TwoColumnGrid from "../TwoColumnGrid/TwoColumnGrid";
+import Label from "../Label/Label";
+import Button from "../Button/Button";
+import Toggle from "../Toggle/Toggle";
+import Checkbox from "../Checkbox/Checkbox";
+import DropDown from "../DropDown/DropDown";
 
-export default { title: 'Form' };
+export default { title: "Form" };
 
 interface FormData {
   firstname: string;
@@ -30,62 +31,64 @@ interface Props {
 
 const Form: FC<Props> = ({ onSubmit }) => {
   const { register, handleSubmit, errors } = useForm();
-  const mapSubmitHandler = useCallback((data) => onSubmit(data), [onSubmit]);
-
+  const mapSubmitHandler = useCallback(data => onSubmit(data), [onSubmit]);
+  const oncChange = (options: string) => {
+    console.log("option", options);
+  };
+  const data = ["Label 1", "Label 2", "Label 3"];
   return (
-    <form onSubmit={handleSubmit(mapSubmitHandler)} className={styles.myform}>
+    <form onSubmit={handleSubmit(mapSubmitHandler)}>
       <TwoColumnGrid>
-        <FormInput 
+        <FormInput
           fillWidth
-          label='Firstname *'
-          name='firstname'
-          placeholder='OguZ Yagiz'
+          label="Firstname *"
+          name="firstname"
+          placeholder="OguZ Yagiz"
           ref={register({ required: true })}
-          error={errors.firstname && 'First name is required.'}
+          error={errors.firstname && "First name is required."}
         />
         <FormInput
           fillWidth
-          label='Lastname *'
-          name='lastname'
-          placeholder='Kara'
+          label="Lastname *"
+          name="lastname"
+          placeholder="Kara"
           ref={register({ required: true })}
-          error={errors.lastname && 'Last name is required.'}
+          error={errors.lastname && "Last name is required."}
         />
         <FormInput
           fillWidth
-          label='E-Mail *'
-          name='email'
-          type='email'
-          placeholder='Enter your email'
+          label="E-Mail *"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
           ref={register({ required: true })}
-          error={errors.email && 'E-Mail is required.'}
+          error={errors.email && "E-Mail is required."}
         />
         <FormInput
           fillWidth
-          label='Phone Number'
-          placeholder='+90 (535) 646 8177'
-          name='phone'
+          label="Phone Number"
+          placeholder="+90 (535) 646 8177"
+          name="phone"
           ref={register({})}
         />
-        <Label title='Marketing 2' >
-          <Toggle
-            name='weeklytips'
-            label='Send me weekly tips to help me improve the engagement on my store'
-            ref={register({})}
-          />
-        </Label>
-        <Toggle
-          name='newfeatures'
-          label='I want to be the first to hear about new features'
-          defaultValue
-          ref={register({})}
+        <div className={styles.fullWidth}>
+          <Label title="Marketing 2">
+            <DropDown options={data} onChange={oncChange} />
+          </Label>
+        </div>
+        <Checkbox
+          label="Customer Accepts Marketing"
+          defaultValue={true}
+          onChange={action("changed")}
         />
-        <Button size='big' type='submit'>Submit</Button>
+        <div className={styles.formBtn}>
+          <Button size="big" type="submit">
+            Add Discount
+          </Button>
+        </div>
       </TwoColumnGrid>
     </form>
   );
 };
 
-export const normal = () => (
-  <Form onSubmit={action('submit')} />
-);
+export const normal = () => <Form onSubmit={action("submit")} />;

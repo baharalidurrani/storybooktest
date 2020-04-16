@@ -1,5 +1,8 @@
-@import '../variables';
-.myform {
-    width: 80%;
-    margin: 30px auto;
+@import "../variables";
+
+.fullWidth {
+  flex-basis: calc(100% - 12px);
+}
+.formBtn {
+  text-align: right;
 }

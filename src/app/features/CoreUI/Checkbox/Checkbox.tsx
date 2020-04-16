@@ -1,8 +1,8 @@
-import React, { FC, forwardRef, Ref, useCallback, useState } from 'react';
-import classNames from 'classnames';
+import React, { FC, forwardRef, Ref, useCallback, useState } from "react";
+import classNames from "classnames";
 
-import Label from '../Label/Label';
-import styles, { hover } from './Checkbox.module.scss';
+import Label from "../Label/Label";
+import styles, { hover } from "./Checkbox.module.scss";
 
 interface Props {
   /**
@@ -40,37 +40,33 @@ const Checkbox: FC<Props> = forwardRef((props, ref) => {
 
   const [isChecked, setChecked] = useState(!!defaultValue);
 
-  const toggle = useCallback(
-    () => {
-      const newValue = !isChecked;
-      setChecked(newValue);
+  const toggle = useCallback(() => {
+    const newValue = !isChecked;
+    setChecked(newValue);
 
-      if (onChange) {
-        onChange(newValue);
-      }
-    },
-    [isChecked, onChange],
-  );
+    if (onChange) {
+      onChange(newValue);
+    }
+  }, [isChecked, onChange]);
 
   return (
     <>
-    
-      <Label title={label || ''} disabled={disabled} position='right'>  
+      <Label title={label || ""} disabled={disabled} position="right">
         <span
           className={classNames(styles.checkboxButton, {
             [styles.checked]: isChecked,
-            [styles.disabled]: disabled,
-            
+            [styles.disabled]: disabled
           })}
         >
-          <div className={classNames(styles.checkboxHandle, {
-            [styles.checked]: isChecked,
-            [styles.disabled]: disabled,
-          })}
+          <div
+            className={classNames(styles.checkboxHandle, {
+              [styles.checked]: isChecked,
+              [styles.disabled]: disabled
+            })}
           />
         </span>
         <input
-          type='checkbox'
+          type="checkbox"
           className={styles.input}
           ref={ref}
           checked={isChecked}
